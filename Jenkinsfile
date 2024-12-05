@@ -4,18 +4,16 @@ pipeline {
     stages {
         stage('build and test') {
             matrix {
-
                 axes {
                     axis {
                         name 'PLATEFORME'
-                        values 'linux', 'macos' , 'wonwows'
+                        values 'linux', 'macos', 'wonwows'
                     }
                     axis {
                         name 'BROWSER'
-                        values 'firefox' , 'chrome' , 'safari'
+                        values 'firefox', 'chrome', 'safari'
                     }
                 }
-
                 stage {
                     stage ('build') {
                         steps {
@@ -28,7 +26,7 @@ pipeline {
                         }
                     }
                 }
-                
+
             }
         }
 
