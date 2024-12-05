@@ -1,0 +1,48 @@
+// Jenkinsfile
+pipeline {
+    agent any
+
+    environment {
+        // Définir les variables d'environnement si nécessaire
+    }
+
+    stages {
+        stage('Cloner le dépôt') {
+            steps {
+                // Cloner le code source depuis le dépôt git
+                checkout scm
+            }
+        }
+
+        stage('Construire l\'image Docker') {
+            steps {
+                // Construire l'image Docker
+                sh 'docker build -t mon-application-nodejs .'
+            }
+        }
+
+        stage('Publier l\'image Docker') {
+            steps {
+                // Pousser l'image vers un registre Docker
+                // Assurez-vous que les identifiants sont correctement configurés dans Jenkins
+                sh 'docker login -u $DOCKER_USER -p $DOCKER_PASS'
+                sh 'docker tag mon-application-nodejs $DOCKER_USER/mon-application-nodejs:latest'
+                sh 'docker push $DOCKER_USER/mon-application-nodejs:latest'
+            }
+        }
+
+        stage('Déploiement') {
+            steps {
+                // Déployer l'application
+                // Cela pourrait être sur un cluster Kubernetes, un serveur distant, etc.
+                sh './deploy.sh'
+            }
+        }
+    }
+
+    post {
+        always {
+            // Actions à effectuer après toutes les étapes
+        }
+    }
+}
