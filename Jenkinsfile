@@ -1,15 +1,42 @@
 pipeline {
     agent any
 
-    triggers {
-        pollSCM('* * * * *')
-    }
-
     stages {
-        stage('build') {
+        stage('build and test') {
+            matrix {
+
+                axes {
+                    axis {
+                        name 'PLATEFORME'
+                        values 'linux', 'macos' , 'wonwows'
+                    }
+                    axis {
+                        name 'BROWSER'
+                        values 'firefox' , 'chrome' , 'safari'
+                    }
+                }
+
+                stage {
+                    stage ('build') {
+                        steps {
+                            echo 'Construire pour ${ PLATEFORME } - ${ BROWSER }'
+                        }
+                    }
+                    stage ('test') {
+                        steps {
+                            echo 'Tester pour ${ PLATEFORME } - ${ BROWSER }'
+                        }
+                    }
+                }
+                
+            }
+        }
+
+        stage('deploiement production') {
             steps {
-                echo 'Builde !'
+                echo 'Déployer !'
             }
         }
     }
+    
 }
