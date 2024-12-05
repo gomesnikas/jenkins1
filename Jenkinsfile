@@ -7,14 +7,14 @@ pipeline {
                 axes {
                     axis {
                         name 'PLATEFORME'
-                        values 'linux', 'macos', 'wonwows'
+                        values 'linux', 'macos', 'wondows'
                     }
                     axis {
                         name 'BROWSER'
                         values 'firefox', 'chrome', 'safari'
                     }
                 }
-                stage {
+                stages {
                     stage ('build') {
                         steps {
                             echo 'Construire pour ${ PLATEFORME } - ${ BROWSER }'
