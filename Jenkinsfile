@@ -8,7 +8,7 @@ pipeline {
     stages{
         stage('builde'){
             steps{
-                echo 'builde !'
+                echo 'Builde !'
             }
         }
     }
