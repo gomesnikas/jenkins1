@@ -5,9 +5,9 @@ pipeline {
         cron('* * * * *')
     }
 
-    stages{
-        stage('build'){
-            steps{
+    stages {
+        stage('build') {
+            steps {
                 echo 'Builde !'
             }
         }
